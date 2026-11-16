@@ -41,7 +41,7 @@ Constants.  Descriptions = {
 		},
 		spa = {
 			name = "Ingwaz",
-			description = "Abre todos los cofres de una sala",
+			description = "Abre todos los cofres de una sala" .. "#{{Collectible199}} Aplica el efecto de la Llave de Mamá a todos los cofres abiertos.",
 		},
 		ru = {
 			name = "Игваз",
