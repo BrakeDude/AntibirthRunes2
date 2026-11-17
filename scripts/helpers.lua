@@ -79,10 +79,6 @@ function Helpers:PlayGiantBook(gfx, sfx, player, rng)
 	if REPENTOGON then
         ItemOverlay.Show(Isaac.GetGiantBookIdByName(gfx), 0, player)
     else
-        local sound = nil
-		if Options.AnnouncerVoiceMode == 2 or Options.AnnouncerVoiceMode == 0 and rng:RandomInt(4) == 0 then
-			sound = sfx
-		end
 		local bookAPI = AntibirthRunes.SavedData.BookAPI
 		if GiantBookAPI and bookAPI == 1 then
 			GiantBookAPI.playGiantBook(
@@ -91,23 +87,20 @@ function Helpers:PlayGiantBook(gfx, sfx, player, rng)
 				GiantBookColors["poof"],
 				GiantBookColors["bg"],
 				GiantBookColors["poof2"],
-				sound
+				nil
 			)
 		elseif bookAPI ~= 1 or not GiantBookAPI then
 			if ScreenAPI and bookAPI == 2 then
-				ScreenAPI.PlayGiantbook("gfx/ui/giantbook/" .. gfx .. ".png", "Appear", p, Isaac.GetItemConfig():GetCard(Isaac.GetCardIdByName(gfx)), GiantBookColors)
-			end
-			if sound then
-				SFXManager():Play(sound, 1, 0)
+				ScreenAPI.PlayGiantbook("gfx/ui/giantbook/" .. gfx .. ".png", "Appear", player, Isaac.GetItemConfig():GetCard(Isaac.GetCardIdByName(gfx)), GiantBookColors)
 			end
 		end
+		Helpers:PlayAnnouncer(sfx, rng)
     end
-	Helpers:PlaySound(sfx, rng)
 end
 
 ---@param sound SoundEffect | integer
 ---@param rng RNG?
-function Helpers:PlaySound(sound, rng)
+function Helpers:PlayAnnouncer(sound, rng)
 	if not rng then
 		rng = RNG()
 		rng:SetSeed(math.max(1, Isaac.GetFrameCount()), 35)
